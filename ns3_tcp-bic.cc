@@ -52,7 +52,7 @@ TcpBic::GetTypeId (void)
                    "cWnd_max-BinarySearchCoefficient. It can be viewed as the gradient "
                    "of the slow start AIM phase: less this value is, "
                    "more steep the increment will be.",
-                   UintegerValue (5),   // smooth_part_in_linux=20;
+                   UintegerValue (20),   // smooth_part_in_linux=20;
                    MakeUintegerAccessor (&TcpBic::m_smoothPart),
                    MakeUintegerChecker <uint32_t> (1))
                       //smooth_part_linux=log(B/(B*Smin))/log(B/(B-1))+B
@@ -147,7 +147,7 @@ TcpBic::Update (Ptr<TcpSocketState> tcb)
       m_epochStart = Simulator::Now ();   /* record the beginning of an epoch */
     }
 
-  if (segCwnd < m_lowWnd)    //<= in_linux
+  if (segCwnd <= m_lowWnd)    //<= in_linux
     {
       NS_LOG_INFO ("Under lowWnd, compatibility mode. Behaving as NewReno");
       cnt = segCwnd;
@@ -251,7 +251,7 @@ TcpBic::GetSsThresh (Ptr<const TcpSocketState> tcb, uint32_t bytesInFlight)
   if (segCwnd < m_lastMaxCwnd && m_fastConvergence)
     {
       NS_LOG_INFO ("Fast Convergence. Last max cwnd: " << m_lastMaxCwnd <<
-                   " updated to " << static_cast<uint32_t> (m_beta * segCwnd));
+                   " updated to " << static_cast<uint32_t> (.899 * segCwnd));
       m_lastMaxCwnd = static_cast<uint32_t> (m_beta * segCwnd);
 //in_linux: ca->last_max_cwnd = (tp->snd_cwnd * (BICTCP_BETA_SCALE + beta))/ (2 * BICTCP_BETA_SCALE);
     }
@@ -262,7 +262,7 @@ TcpBic::GetSsThresh (Ptr<const TcpSocketState> tcb, uint32_t bytesInFlight)
       m_lastMaxCwnd = segCwnd;
     }
 
-  if (segCwnd < m_lowWnd)   //in_linux:  <=
+  if (segCwnd <= m_lowWnd)   //in_linux:  <=
     {
       ssThresh = std::max (2 * tcb->m_segmentSize, bytesInFlight / 2);
 //in_linux: return max(tp->snd_cwnd >> 1U, 2U); ????
