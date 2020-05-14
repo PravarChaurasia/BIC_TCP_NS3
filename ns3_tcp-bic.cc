@@ -251,7 +251,7 @@ TcpBic::GetSsThresh (Ptr<const TcpSocketState> tcb, uint32_t bytesInFlight)
   if (segCwnd < m_lastMaxCwnd && m_fastConvergence)
     {
       NS_LOG_INFO ("Fast Convergence. Last max cwnd: " << m_lastMaxCwnd <<
-                   " updated to " << static_cast<uint32_t> (.899 * segCwnd));
+                   " updated to " << static_cast<uint32_t> (m_beta * segCwnd));
       m_lastMaxCwnd = static_cast<uint32_t> (.899 * segCwnd);
 //in_linux: ca->last_max_cwnd = (tp->snd_cwnd * (BICTCP_BETA_SCALE + beta))/ (2 * BICTCP_BETA_SCALE);
     }
