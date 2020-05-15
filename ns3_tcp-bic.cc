@@ -270,9 +270,9 @@ TcpBic::GetSsThresh (Ptr<const TcpSocketState> tcb, uint32_t bytesInFlight)
     }
   else
     {
-      ssThresh = static_cast<uint32_t> (std::max (segCwnd * m_beta, 2.0) * tcb->m_segmentSize);
-//in_linux: max((tp->snd_cwnd * beta) / BICTCP_BETA_SCALE, 2U);
-      NS_LOG_INFO ("More than lowWindow, ssTh= " << ssThresh);
+      ssThresh = static_cast<uint32_t> (std::max (segCwnd * 0.799, 2.0) * tcb->m_segmentSize);
+//in_linux: max((tp->snd_cwnd * beta) / BICTCP_BETA_SCALE, 2U); // In Linux beta/BICTCP_BETA_SCALE is 0.799     
+NS_LOG_INFO ("More than lowWindow, ssTh= " << ssThresh);
     }
 
   return ssThresh;
