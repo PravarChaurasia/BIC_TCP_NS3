@@ -1,5 +1,25 @@
 # BIC_TCP_NS3
-BIC comparison on Linux and ns3, modificaiton to overlap the graph in both Linux Kernel and ns3-dce
+
+Project Title: Validate the ns-3 implementation of BIC TCP using ns-3 DCE
+
+Brief: 
+
+Binary Increase Congestion control (BIC) is a precursor to CUBIC and is targeted for
+Long Fat Networks. It uses a binary search algorithm to find the optimal value of congestion
+window (​ cwnd ​ ). In this project, the aim is to validate ns-3 BIC implementation by comparing
+the results obtained from it to those obtained by simulating Linux BIC.
+
+Recommended Reading:
+
+● Direct Code Execution (Link: https://www.nsnam.org/overview/projects/direct-code-execution/​ )
+
+● Linux kernel code (Link: ​ https://elixir.bootlin.com/linux/v4.4/source/net/ipv4/tcp_bic.c​ )
+
+● BIC Paper (Link: ​ https://ieeexplore.ieee.org/abstract/document/1354672/​ )
+
+
+Overview of Work Done:
+(See Wiki For More Details)
 
 1) As Ns-3-dce does not have the correct and same  implementation of PRR Recovery as Linux we need to update the ns-3-dev. After updating ns-3-dev we need to build it again. 
 2) We updated the ns-3-dev using the link https://gitlab.com/apoorvabhargava/ns-3-dev.git
